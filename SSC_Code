@@ -1,0 +1,60 @@
+##ZAYD OMAR 5th MAY 2016
+rm(list=ls())
+data_AB=read.csv("C:/Users/zayd/Documents/SSC Case Competition/FluWatch_AB.csv", header=TRUE)
+data_BC=read.csv("C:/Users/zayd/Documents/SSC Case Competition/FluWatch_BC.csv", header=TRUE)
+data_QC=read.csv("C:/Users/zayd/Documents/SSC Case Competition/FluWatch_Quebec.csv", header=TRUE)
+data_ON=read.csv("C:/Users/zayd/Documents/SSC Case Competition/FluWatch_Ontario.csv", header=TRUE)
+data_CA=read.csv("C:/Users/zayd/Documents/SSC Case Competition/FluWatch_CA.csv", header=TRUE)[1:17]
+data_GFT=read.csv("C:/Users/zayd/Documents/SSC Case Competition/GFT_Data.csv", header=TRUE)
+
+data_AB[,1]=sort(as.Date(data_AB[,1], format="%d-%b-%Y"))
+data_BC[,1]=sort(as.Date(data_BC[,1], format="%d-%b-%Y"))
+data_QC[,1]=sort(as.Date(data_QC[,1], format="%d-%b-%Y"))
+data_ON[,1]=sort(as.Date(data_ON[,1], format="%d-%b-%Y"))
+data_CA[,1]=sort(as.Date(data_CA[,1], format="%d-%b-%Y"))
+data_GFT[,1]=sort(as.Date(data_GFT[,1]))
+
+## where as the other vectors have structure date 0003
+## the next command adds 2000 to make the date format in 2000's
+
+split_year= sapply(as.character(data_AB[,1]), strsplit, "-") 
+year_no= as.numeric(do.call(rbind, (split_year))[,1])+2000
+monthandday_AB= do.call(rbind, split_year)[,2:3] 
+data_AB[,1]= paste(year_no,monthandday_AB[,1],monthandday_AB[,2],sep="-")
+
+split_year= sapply(as.character(data_BC[,1]), strsplit, "-") 
+year_no= as.numeric(do.call(rbind, (split_year))[,1])+2000
+monthandday_BC= do.call(rbind, split_year)[,2:3] 
+data_BC[,1]= paste(year_no,monthandday_BC[,1],monthandday_BC[,2],sep="-")
+
+split_year= sapply(as.character(data_ON[,1]), strsplit, "-") 
+year_no= as.numeric(do.call(rbind, (split_year))[,1])+2000
+monthandday_ON= do.call(rbind, split_year)[,2:3] 
+data_ON[,1]= paste(year_no,monthandday_ON[,1],monthandday_ON[,2],sep="-")
+
+split_year= sapply(as.character(data_QC[,1]), strsplit, "-") 
+year_no= as.numeric(do.call(rbind, (split_year))[,1])+2000
+monthandday_QC= do.call(rbind, split_year)[,2:3] 
+data_QC[,1]= paste(year_no,monthandday_QC[,1],monthandday_QC[,2],sep="-")
+
+split_year= sapply(as.character(data_CA[,1]), strsplit, "-") 
+year_no= as.numeric(do.call(rbind, (split_year))[,1])+2000
+monthandday_CA= do.call(rbind, split_year)[,2:3] 
+data_CA[,1]= paste(year_no,monthandday_CA[,1],monthandday_CA[,2],sep="-")
+
+
+##Sorting the date and changing the format:
+data_AB[,1]=sort(as.Date(data_AB[,1]))
+data_BC[,1]=sort(as.Date(data_BC[,1]))
+data_QC[,1]=sort(as.Date(data_QC[,1]))
+data_ON[,1]=sort(as.Date(data_ON[,1]))
+data_CA[,1]=sort(as.Date(data_CA[,1]))
+data_GFT[,1]=sort(as.Date(data_GFT[,1]))
+##
+
+plot(data_AB[,2]~data_AB[,1], ylim=c(0,5000),type="l", col="red")
+lines(data_BC[,2]~data_BC[,1], type="l", col="blue")
+lines(data_ON[,2]~data_ON[,1], type="l", col="yellow")
+lines(data_QC[,2]~data_QC[,1], type="l", col="green")
+lines(data_CA[,2]~data_CA[,1], type="l", col="brown")
+lines(data_GFT[,2]~data_GFT[,1], type="l", col="black")
